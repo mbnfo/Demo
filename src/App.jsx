@@ -187,6 +187,7 @@ function App() {
   const back = () => {
     setProgressionId(0)
     setProggresion(33.33)
+    setActiveForm(false)
   }
 
   const captureText = (e) =>{
