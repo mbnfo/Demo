@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 const index = [
   {
@@ -126,25 +128,52 @@ function App() {
   const [selectedOption, setSelectedOption] = useState()
   const [otherActive, setOtherActive] = useState(false)
   const [text, setText] = useState('')
+  const [activeForm, setActiveForm] = useState(false)
   /*const answers = progressionId + 1*/
 
   const ProgressForward = (cue) =>{
     if(!otherActive){
       if (cue.id > 4){
+        setProggresion(prevstate => prevstate + 33.33)
         console.log('out of bounds')
-        setProggresion(99)
-        alert('you have succesfully submitted: ' + cue.option + ' to the backend')
+
+        let tl = gsap.timeline()
+
+        tl.to(
+          '#options',{
+            autoAlpha: 0,
+            duration: 1,
+            onComplete: ()=>{
+              setActiveForm(true)
+            }
+          }
+        ).to(
+          '#options',{
+            autoAlpha: 1,
+            duration: 1,
+            delay: 1
+          }
+        )
         if(cue.option === 'Other:'){
           setOtherActive(true)
         }
-        else{
-          setProgressionId(0)
-        }
       }
       else{
-        setProggresion(prevstate => prevstate + 33.33)
-        setProgressionId(cue.id)
-        setSelectedOption(null)
+        let tl = gsap.timeline();
+
+        tl.to('#options', {
+          autoAlpha: 0,
+          duration: 1,
+          onComplete: () => {
+            setProggresion(prevstate => prevstate + 33.33);
+            setProgressionId(cue.id);
+            setSelectedOption(null);
+          }
+        }).to('#options', {
+          autoAlpha: 1,
+          duration: 1,
+          delay: 1
+        });
       }
     }
     else{
@@ -153,6 +182,11 @@ function App() {
       setProgressionId(0)
       setOtherActive(false)
     }
+  }
+
+  const back = () => {
+    setProgressionId(0)
+    setProggresion(33.33)
   }
 
   const captureText = (e) =>{
@@ -168,21 +202,39 @@ function App() {
 
     {/*this is the header section on the app where the title of the page and the save button are located*/}
       <div id = 'header'>
-        <h4>Hadley's Private Investigations</h4>
-        <h4 id = 'save'>save</h4>
       </div>
 
     {/*this is the main section of the app where the question prompts are located along with the options for answering the text prompts*/}
      <div id = 'main'>
         <div id = 'questions-section'>
-          <h1> What do you need a Private Investigator to do for you?</h1>
+          <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>
           {/*the code below is to dynamically change the question asked, the questions are taken from the list above*/}
-          <p>{index[progressionId].title}</p>
 
 
         {/*the code below is to check if the option of other has been submitted. if the option has been submitted the buttons on screen are replaced by a text box*/}
           {otherActive? <h5>Please elaborate further</h5>: null}
         </div>
+     {activeForm? 
+     <form id='contact-info'>
+       <div id = 'input' >
+        <label for = 'Name'><h3>Name*</h3></label>
+          <input type='text' id = 'text-input' placeholder='Full Name' required/>
+       </div>
+       <div id = 'input'>
+        <label for = 'Email'><h3>Email*</h3></label>
+          <input type = 'email' id = 'text-input' placeholder='example@email.com' required/>
+       </div>
+       <div id = 'input'>
+        <label for = 'Phone Number'><h3>Number*</h3></label>
+          <input type = 'tel' id = 'text-input' pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" placeholder="000-000-0000" maxlength="12" autocomplete="tel"/>
+       </div>
+       <div>
+        <input type='submit' id = 'submit-contact-info'/>
+       </div>
+     </form>
+     : 
+     
+      <>
       {otherActive? 
         <div>
           <form>
@@ -205,15 +257,18 @@ function App() {
         </div>
       </>
      }
+     </>
+      }
       </div>
 
 
-      <div id = 'terms'><h5 id = 'unclickable'> @2025 Hadley's Private Investigations | insert slogan </h5> <h5 id = 'clickable'>| terms of service - Privacy Policy - Do Not Sell My Info</h5></div>
+      <div id = 'terms'><h5> @2025 AmericanPrivateInvestigator.com | insert slogan | <span id = 'highlighted'> Terms of Service - Privacy Policy - Do Not Sell My Info </span></h5></div>
       <div id = 'progress-bar'>
-          <div id = 'bar' style={{width: `${progression}%`}}>
+          <div id = 'bar' style={{width: `${progression}%`, maxWidth : '100%'}}>
           </div>
       </div>
       <div id = 'submit'>
+          { progressionId > 0 ?   <button onClick={back}>Back</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Back</button>}
           { selectedOption ?   <button onClick={()=> ProgressForward(selectedOption)}>Next</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Next</button>}
       </div>
     </div>
