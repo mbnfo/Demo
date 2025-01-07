@@ -1,0 +1,169 @@
+body{
+  padding: 0;
+  margin: 0;
+  background-color: white;
+}
+
+h1, h2, h3, h4, p{
+  font-family: "Funnel Sans", serif;
+  color: rgba(0, 0, 0, 0.858);
+}
+
+h5{
+  font-family: "Funnel Sans", serif;
+  color: grey;
+}
+
+#app{
+  display: grid;
+  grid-template-rows: 1fr 12fr 1fr 1fr 1fr;
+  height: 98vh;
+  width: 98vw;
+  margin: 0;
+  padding: 0;
+}
+
+#header{
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
+#save{
+  color: #0040E6;
+}
+
+#main{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#questions-section{
+  text-align: center;
+}
+
+#options{
+  margin-top: 40px;
+}
+
+#option{
+  display: flex;
+  align-items: center;
+  border: 1px gray solid;
+  background-color: white;
+  padding-left: 30px;
+  margin-top: 15px;
+  border-radius: 15px;
+  height: 60px;
+  min-width: 40vw;
+}
+
+#option button:active{
+  border: 3px #0040E6 solid;
+}
+
+form{
+  height: 100%;
+  width: 100%;
+}
+
+textarea{
+  height: 80%;
+  width: 80%;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  resize: none;
+}
+
+p{
+  font-size: larger;
+}
+
+#terms{
+  display: flex;
+  margin: auto;
+}
+
+#clickable{
+  color: #0040E6;
+}
+
+#progress-bar{
+  width: 98vw;
+  background-color: grey;
+  height: 3px;
+  margin-left: 5px;
+  border-radius: 5px;
+}
+
+#bar{
+  height: 100%;
+  background-color: #0040E6;
+  transition: width 0.4s ease;
+}
+
+#submit{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 150px;
+  margin-top: -20px;
+}
+
+#submit p{
+  color: white;
+}
+
+#submit button{
+  height: 50px;
+  width: fit-content;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #0040E6;
+  border-radius: 15px;
+  font-size: small;
+  border: none
+}
+
+#null{
+  height: 50px;
+  width: fit-content;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #0040E6;
+  border-radius: 15px;
+  font-size: small;
+  border: none;
+}
+
+@media screen and (max-width: 768px) {
+  #main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto; 
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #main {
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: auto auto;
+  }
+
+  #options {
+    margin-top: 20px;
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  #option {
+    min-width: 100%;
+  }
+  #submit {
+    margin-right: 20px; 
+}
+}
