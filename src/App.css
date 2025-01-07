@@ -1,28 +1,28 @@
-body{
+body {
   padding: 0;
   margin: 0;
   background-color: white;
 }
 
-h1, h2, h3, h4, p, label{
+h1, h2, h3, h4, p, label {
   font-family: Arial, Helvetica, sans-serif;
   color: rgba(0, 0, 0, 0.858);
 }
 
-button{
+button {
   cursor: pointer;
 }
 
-#highlighted{
+#highlighted {
   color: #0040E6;
 }
 
-h5{
+h5 {
   font-family: Arial, Helvetica, sans-serif;
   color: grey;
 }
 
-#app{
+#app {
   display: grid;
   grid-template-rows: 1fr 12fr 1fr 1fr 1fr;
   height: 98vh;
@@ -31,31 +31,31 @@ h5{
   padding: 0;
 }
 
-#header{
+#header {
   width: 80%;
   display: flex;
   justify-content: space-between;
   margin: auto;
 }
 
-#save{
+#save {
   color: #0040E6;
 }
 
-#main{
+#main {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-#questions-section{
+#questions-section {
   text-align: center;
 }
 
-#options{
+#options {
   margin-top: 40px;
 }
 
-#option{
+#option {
   display: flex;
   align-items: center;
   border: 1px gray solid;
@@ -68,24 +68,29 @@ h5{
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-#option:active, #option:focus{
+#option:active,
+#option:focus {
   border: 3px #0040E6 solid;
   transform: scale(0.95);
 }
 
-#contact-info{
+.contact-info {
   display: grid;
-  grid-template-rows: 2fr 2fr 2fr 2fr 1fr;
+  grid-template-rows: repeat(4, 2fr) 1fr;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 100%;
 }
 
-#input{
+#input {
   display: grid;
   grid-template-rows: 1fr 1fr;
   margin-top: -30px;
 }
 
-#text-input{
-  width: 60%;
+#text-input {
+  width: 80%;
   height: 40px;
   border-radius: 10px;
   background-color: white;
@@ -94,21 +99,25 @@ h5{
   margin-top: -20px;
 }
 
-#submit-contact-info{
-  width: 60%;
+#submit-contact-info {
+  width: 80%;
   height: 40px;
   border-radius: 10px;
-  background-color: #B6CBFF;
+  background-color: #b6cbff;
   cursor: pointer;
 }
 
-form{
+form {
   height: fit-content;
   width: 100%;
   margin: auto;
 }
 
-textarea{
+.other-form {
+  height: 80%;
+}
+
+textarea {
   height: 80%;
   width: 80%;
   border-radius: 5px;
@@ -117,20 +126,20 @@ textarea{
   resize: none;
 }
 
-p{
+p {
   font-size: larger;
 }
 
-#terms{
+#terms {
   display: flex;
   margin: auto;
 }
 
-#clickable{
+#clickable {
   color: #0040E6;
 }
 
-#progress-bar{
+#progress-bar {
   width: 98vw;
   background-color: grey;
   height: 3px;
@@ -138,24 +147,24 @@ p{
   border-radius: 5px;
 }
 
-#bar{
+#bar {
   height: 100%;
   background-color: #0040E6;
   transition: width 0.8s ease;
 }
 
-#submit{
+#submit {
   display: flex;
   justify-content: space-between;
   width: 90%;
   margin: auto;
 }
 
-#submit p{
+#submit p {
   color: white;
 }
 
-#submit button{
+#submit button {
   height: 50px;
   width: fit-content;
   padding-left: 20px;
@@ -163,45 +172,74 @@ p{
   background-color: #0040E6;
   border-radius: 15px;
   font-size: small;
-  border: none
+  border: none;
 }
 
-.fade-transition {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.fade-transition-enter {
-  opacity: 1;
-}
-
+/* Medium screens */
 @media screen and (max-width: 768px) {
   #main {
-    display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto; 
-  }
-}
-
-@media screen and (max-width: 480px) {
-  #main {
-    display: grid;
-    grid-template-columns: 1fr; 
     grid-template-rows: auto auto;
   }
-
-  #options {
-    margin-top: 20px;
+  .contact-info {
+    width: 90%;
   }
-
   textarea {
     width: 100%;
   }
+  #option {
+    min-width: 90%;
+  }
+  h1, h2, h3, h4, p, label {
+    font-size: smaller;
+  }
+}
 
+/* Small screens */
+@media screen and (max-width: 480px) {
+  #main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 4fr;
+  }
+  #options {
+    margin-top: 20px;
+  }
+  #text-input{
+    width: 80vw;
+  }
+  #submit-contact-info{
+    width: 80vw;
+  }
+  .contact-info {
+    width: 100%;
+    height: 90%;
+  }
+  textarea {
+    width: 100%;
+    height: 70%;
+  }
   #option {
     min-width: 100%;
   }
+
+  h1{
+    font-size: larger;
+  }
+
+  h2, h3, h4, p, label {
+    font-size: medium;
+  }
+
+  h5{
+    font-size: 8px;
+  }
+
   #submit {
-    margin-right: 20px; 
-}
+    margin-right: 20px;
+  }
+
+  #submit button{
+    width: 80px;
+    height: 30px;
+  }
 }

@@ -129,70 +129,81 @@ function App() {
   const [otherActive, setOtherActive] = useState(false)
   const [text, setText] = useState('')
   const [activeForm, setActiveForm] = useState(false)
+  const [question_1_data, setQuestion_1_Data] = useState(null)
+  const Increment_For_Loading_Bar = 33.33
+  const Out_Of_Bounds_id = 4
   /*const answers = progressionId + 1*/
 
-  const ProgressForward = (cue) =>{
-    if(!otherActive){
-      if (cue.id > 4){
-        setProggresion(prevstate => prevstate + 33.33)
-        console.log('out of bounds')
+  const ContinuationAnimation = (onComplete) => {
+     let tl = gsap.timeline();
+  
+    tl.to('#options', {
+      autoAlpha: 0,
+      duration: 1,
+      onComplete
+    }).to('#options', {
+      autoAlpha: 1,
+      duration: 1,
+      delay: 1,
+    })
 
-        let tl = gsap.timeline()
-
-        tl.to(
-          '#options',{
-            autoAlpha: 0,
-            duration: 1,
-            onComplete: ()=>{
-              setActiveForm(true)
-            }
-          }
-        ).to(
-          '#options',{
-            autoAlpha: 1,
-            duration: 1,
-            delay: 1
-          }
-        )
-        if(cue.option === 'Other:'){
-          setOtherActive(true)
-        }
-      }
-      else{
-        let tl = gsap.timeline();
-
-        tl.to('#options', {
-          autoAlpha: 0,
-          duration: 1,
-          onComplete: () => {
-            setProggresion(prevstate => prevstate + 33.33);
-            setProgressionId(cue.id);
-            setSelectedOption(null);
-          }
-        }).to('#options', {
-          autoAlpha: 1,
-          duration: 1,
-          delay: 1
-        });
-      }
-    }
-    else{
-      alert('you have succesfully submitted: ' + text + ' to the back end')
-      setProggresion(0)
-      setProgressionId(0)
-      setOtherActive(false)
-    }
   }
+
+  const HandleCue = (cue) =>{
+
+    if (!otherActive) {
+
+ // if the selected option is cue the code needs to set the form to a text area
+      if (cue.option === 'Other:') {
+       ContinuationAnimation(()=>{
+         setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar);
+         setActiveForm(false) 
+         setOtherActive(true)
+       })
+     } 
+//else if the option is not an other and is simultaneously not one of the options from the first question (which effectively means they are from the second question) the code has to send the user to the contact form and colllect the data
+//options from the first question or first set of options all have IDs of less than 4 or equal to 4...hence the sign
+      else if (cue.id > Out_Of_Bounds_id && cue.option !== 'Other:') {
+        setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar)
+        ContinuationAnimation(()=>{
+          setActiveForm(true)
+          setSelectedOption(false)
+        })}
+
+//if the clicked option is not an "Other" option, nor a secondary options it means the option is from the first choice of options, so we need to collect that data and then send the user to the seconnd set of options     
+      else{
+        ContinuationAnimation(() => {
+          setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar)
+          setProgressionId(cue.id);
+          setQuestion_1_Data(cue.option)
+          setSelectedOption(null)})
+      }
+    } 
+    //this means that the otherActive is actually active, meaning the user is seeing the data from the "other" option's text area and is thus sending their other data, we need to collect this data and then send the user to the contact form
+    else if(otherActive) {
+      ContinuationAnimation(()=>{
+        setProggresion(Increment_For_Loading_Bar);
+        setOtherActive(false);
+        setActiveForm(true)
+      })
+    }
+  };
+  
 
   const back = () => {
+    ContinuationAnimation(()=>{
     setProgressionId(0)
-    setProggresion(33.33)
+    setProggresion(Increment_For_Loading_Bar)
     setActiveForm(false)
+    setOtherActive(false)
+    })
   }
 
+
+//captures the text from the "other" option text area and saves it in the text variable
   const captureText = (e) =>{
     setText(e.target.value)
-    console.log(text)
+    setSelectedOption(true)
   }
 
   console.log(index)
@@ -216,7 +227,7 @@ function App() {
           {otherActive? <h5>Please elaborate further</h5>: null}
         </div>
      {activeForm? 
-     <form id='contact-info'>
+     <form className='contact-info' id='options'>
        <div id = 'input' >
         <label for = 'Name'><h3>Name*</h3></label>
           <input type='text' id = 'text-input' placeholder='Full Name' required/>
@@ -238,7 +249,7 @@ function App() {
       <>
       {otherActive? 
         <div>
-          <form>
+          <form id='options' className = 'other-form'>
             <textarea onChange={captureText}/>
           </form>
         </div>
@@ -263,14 +274,14 @@ function App() {
       </div>
 
 
-      <div id = 'terms'><h5> @2025 AmericanPrivateInvestigator.com | insert slogan | <span id = 'highlighted'> Terms of Service - Privacy Policy - Do Not Sell My Info </span></h5></div>
+      <div id = 'terms'>{activeForm? <h5>By submitting you agree to share your contact info with a Americanprivateinvestigator.com and be contacted about private investigator services. There's no obligation to purchase any service. </h5> : <h5> @2025 AmericanPrivateInvestigator.com | insert slogan | <span id = 'highlighted'> Terms of Service - Privacy Policy - Do Not Sell My Info </span></h5>}</div>
       <div id = 'progress-bar'>
           <div id = 'bar' style={{width: `${progression}%`, maxWidth : '100%'}}>
           </div>
       </div>
       <div id = 'submit'>
           { progressionId > 0 ?   <button onClick={back}>Back</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Back</button>}
-          { selectedOption ?   <button onClick={()=> ProgressForward(selectedOption)}>Next</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Next</button>}
+          { selectedOption ?   <button onClick={()=> HandleCue(selectedOption)}>Next</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Next</button>}
       </div>
     </div>
   )
