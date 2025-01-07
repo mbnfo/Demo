@@ -212,10 +212,6 @@ function App() {
     <div id = 'app'>
     {/*This is where the main page is located...everything in the app is here*/}
 
-    {/*this is the header section on the app where the title of the page and the save button are located*/}
-      <div id = 'header'>
-      </div>
-
     {/*this is the main section of the app where the question prompts are located along with the options for answering the text prompts*/}
      <div id = 'main'>
         <div id = 'questions-section'>
@@ -260,7 +256,7 @@ function App() {
         {/*the code below is what allows for the variables inside index to be looped through and displayed accordingly*/}
           { index[progressionId].options.map((cue, index) => {
             return (
-              <button id = 'option' key = {index}  onClick={()=> setSelectedOption(cue)}>
+              <button id = 'option' key = {index}  onClick={()=> HandleCue(cue)}>
               {/*this button sets in the option selected by the user into a variable*/}
                 <p>{cue.option}</p>
               </button>
