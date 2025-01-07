@@ -139,12 +139,12 @@ function App() {
   
     tl.to('#options', {
       autoAlpha: 0,
-      duration: 1,
+      duration: 0.5,
       onComplete
     }).to('#options', {
       autoAlpha: 1,
-      duration: 1,
-      delay: 1,
+      duration: 0.5,
+      delay: 0.5,
     })
 
   }
@@ -250,7 +250,7 @@ function App() {
       {otherActive? 
         <div>
           <form id='options' className = 'other-form'>
-            <textarea onChange={captureText}/>
+            <textarea onChange={captureText} placeholder='Tell us more'/>
           </form>
         </div>
       : 

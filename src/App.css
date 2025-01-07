@@ -90,7 +90,7 @@ h5 {
 }
 
 #text-input {
-  width: 80%;
+  width: 40vw;
   height: 40px;
   border-radius: 10px;
   background-color: white;
@@ -100,7 +100,7 @@ h5 {
 }
 
 #submit-contact-info {
-  width: 80%;
+  width: 40vw;
   height: 40px;
   border-radius: 10px;
   background-color: #b6cbff;
