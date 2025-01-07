@@ -31,13 +31,6 @@ h5 {
   padding: 0;
 }
 
-#header {
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-}
-
 #save {
   color: #0040E6;
 }
@@ -49,6 +42,7 @@ h5 {
 
 #questions-section {
   text-align: center;
+  margin-top: 40px;
 }
 
 #options {
