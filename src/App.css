@@ -19,7 +19,7 @@ button {
 }
 
 #highlighted {
-  color: #0040E6;
+  color: #1C85E8;
 }
 
 #highlighted-2{
@@ -43,10 +43,6 @@ h5 {
   width: 98vw;
   margin: auto;
   padding: 0;
-}
-
-#save {
-  color: #0040E6;
 }
 
 #main {
@@ -84,7 +80,7 @@ h5 {
 
 #option:active,
 #option:focus {
-  border: 3px #0040E6 solid;
+  border: 3px #1C85E8 solid;
   transform: scale(0.95);
 }
 
@@ -159,7 +155,7 @@ p {
 }
 
 #clickable {
-  color: #0040E6;
+  color: #1C85E8;
 }
 
 #progress-bar {
@@ -173,7 +169,7 @@ p {
 
 #bar {
   height: 100%;
-  background-color: #0040E6;
+  background-color: #1C85E8;
   transition: width 0.8s ease;
 }
 
@@ -194,7 +190,7 @@ p {
   width: 100px;
   padding-left: 20px;
   padding-right: 20px;
-  background-color: #0040E6;
+  background-color: #1C85E8;
   border-radius: 15px;
   font-size: small;
   border: none;
