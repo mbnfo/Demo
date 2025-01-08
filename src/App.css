@@ -235,7 +235,7 @@ p {
   }
 
   h1{
-    font-size: larger;
+    font-size: x-large;
   }
 
   h2, h3, h4, p, label {
@@ -243,7 +243,7 @@ p {
   }
 
   h5{
-    font-size: 8px;
+    font-size: 6px;
   }
 
   #submit {
