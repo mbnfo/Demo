@@ -246,7 +246,8 @@ function App() {
       {otherActive? 
         <div>
           <form id='options' className = 'other-form'>
-            <textarea onChange={captureText} placeholder='Tell us more'/>
+            <textarea onChange={captureText} placeholder='Tell us more'/>   
+          <input type='submit' id = 'submit-contact-info'/>
           </form>
         </div>
       : 
@@ -277,7 +278,6 @@ function App() {
       </div>
       <div id = 'submit'>
           { progressionId > 0 ?   <button onClick={back}>Back</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Back</button>}
-          { selectedOption && otherActive ?   <button onClick={()=> HandleCue(selectedOption)}>Next</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Next</button>}
       </div>
     </div>
   )

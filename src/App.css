@@ -203,6 +203,7 @@ p {
 /* Small screens */
 @media screen and (max-width: 480px) {
   #main {
+    height: 80vh;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 3fr;
   }
@@ -213,16 +214,22 @@ p {
     width: 80vw;
   }
   #submit-contact-info{
-    width: 80vw;
+    width: 82vw;
   }
   .contact-info {
     width: 100%;
     height: 90%;
   }
-  textarea {
-    width: 100%;
-    height: 70%;
+  .other-form{
+    display: grid;
+    justify-content: center;
+    align-items: center;
   }
+  textarea {
+    width: 80vw;
+    height: 20vh;
+  }
+
   #option {
     min-width: 100%;
   }
@@ -245,6 +252,6 @@ p {
 
   #submit button{
     width: 80px;
-    height: 30px;
+    height: 40px;
   }
 }
