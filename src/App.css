@@ -103,6 +103,10 @@ h5 {
   margin-top: -30px;
 }
 
+#input label{
+  margin-left: 5px;
+}
+
 #text-input {
   display: flex;
   align-items: center;
