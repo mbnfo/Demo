@@ -5,10 +5,10 @@ body {
 }
 
 h1{
-  font-size: xx-large;
+  font-size: 35px;
 }
 
-h1, h2, h3, h4, p, label {
+h1, h2, h3, h4, label {
   font-family: Arial, Helvetica, sans-serif;
   color: rgba(0, 0, 0, 0.858);
   padding-bottom: 5px;
@@ -22,17 +22,26 @@ button {
   color: #0040E6;
 }
 
+#highlighted-2{
+  color: #A8BBF4;
+}
+
+p{
+  font-family: Arial, Helvetica, sans-serif;
+  color: #454545;
+}
+
 h5 {
   font-family: Arial, Helvetica, sans-serif;
-  color: grey;
+  color: #B6B6B6;
 }
 
 #app {
   display: grid;
-  grid-template-rows: 12fr 1fr 1fr 1fr;
-  height: 90vh;
+  grid-template-rows: 15fr 1fr 1fr 1fr;
+  height: 98vh;
   width: 98vw;
-  margin: 0;
+  margin: auto;
   padding: 0;
 }
 
@@ -59,14 +68,18 @@ h5 {
 #option {
   display: flex;
   align-items: center;
-  border: 1px gray solid;
+  border: 1px #d3d3d3 solid;
   background-color: white;
-  padding-left: 30px;
+  margin: auto;
   margin-top: 15px;
-  border-radius: 15px;
-  height: 60px;
+  border-radius: 19px;
+  height: 65px;
   min-width: 40vw;
   transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#option p{
+  padding: 20px;
 }
 
 #option:active,
@@ -91,13 +104,16 @@ h5 {
 }
 
 #text-input {
-  width: 40vw;
-  height: 40px;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  border: 1px #d3d3d3 solid;
   background-color: white;
-  color: black;
-  border: 1px grey solid;
-  margin-top: -20px;
+  margin: auto;
+  border-radius: 19px;
+  height: 50px;
+  min-width: 40vw;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin-top: -25px;
 }
 
 #submit-contact-info {
@@ -148,7 +164,7 @@ p {
   height: 3px;
   margin-left: 5px;
   border-radius: 5px;
-  margin-bottom: 5px;
+  margin-top: 10px;
 }
 
 #bar {
@@ -162,6 +178,7 @@ p {
   justify-content: flex-end;
   width: 90%;
   margin: auto;
+  margin-top: 5px;
 }
 
 #submit p {
@@ -170,7 +187,7 @@ p {
 
 #submit button {
   height: 50px;
-  width: fit-content;
+  width: 100px;
   padding-left: 20px;
   padding-right: 20px;
   background-color: #0040E6;
@@ -227,7 +244,7 @@ p {
   }
   textarea {
     width: 80vw;
-    height: 20vh;
+    height: 45vh;
   }
 
   #option {

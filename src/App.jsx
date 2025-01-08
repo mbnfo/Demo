@@ -10,7 +10,7 @@ const index = [
     'options': [
       {
         'id': 1,
-        'option': 'Background Checks',
+        'option': 'Background checks',
       },
       {
         'id': 2,
@@ -18,102 +18,102 @@ const index = [
       },
       {
         'id': 3,
-        'option': 'Find a Person',
+        'option': 'Find a person',
       },
       {
         'id': 4,
-        'option': 'Corporate Investigations'
+        'option': 'Corporate investigations'
       },
     ]
   },
 
   {
     'id': 1,
-    'title': 'BackGround Checks',
+    'title': 'BackGround checks',
     'options': [
       {
         'id': 5,
-        'option': 'Pre-Employment Screening',
+        'option': 'Pre-employment screening',
       },
       {
         'id': 6,
-        'option': 'Tenant Verification'
+        'option': 'Tenant verification'
       },
       {
         'id': 7,
-        'option': 'Dating Background Check'
+        'option': 'Dating background check'
       },
       {
         'id': 8,
-        'option': 'Other:'
+        'option': 'Other'
       }
     ]
   },
 
   {
     'id': 2,
-    'title': 'Surveillance Services',
+    'title': 'Surveillance services',
     'options': [
       {
         'id': 9,
-        'option': 'Infidelity Investigation',
+        'option': 'Infidelity investigation',
       },
       {
         'id': 10,
-        'option': 'Insurance Fraud'
+        'option': 'Insurance fraud'
       },
       {
         'id': 11,
-        'option': 'Child Custody Cases'
+        'option': 'Child custody cases'
       },
       {
         'id': 12,
-        'option': 'Other:'
+        'option': 'Other'
       }
     ]
   },
   {
     'id': 3,
-    'title': 'Find a Person',
+    'title': 'Find a person',
     'options': [
       {
         'id': 13,
-        'option': 'Skip Tracing'
+        'option': 'Skip tracing'
       },
       {
         'id': 14,
-        'option': 'Lost Family Members'
+        'option': 'Lost family members'
       },
       {
         'id': 15,
-        'option': 'Asset Recovery'
+        'option': 'Asset recovery'
       },
       {
         'id': 16,
-        'option': 'Other:'
+        'option': 'Other'
       }
     ]
   },
 
   {
     'id': 4,
-    'title': 'Corporate Investigations',
+    'title': 'Corporate investigations',
     'options': [
       {
         'id': 17,
-        'option': 'Employee Misconduct'
+        'option': 'Employee misconduct'
       },
       {
         'id': 18,
-        'option': 'Due Diligence',
+        'option': 'Due diligence',
       },
       {
         'id': 19,
-        'option': 'Fraud Investigation'
+        'option': 'Fraud investigation'
       },
       {
         'id': 20,
-        'option': 'Other:'
+        'option': 'Other'
       }
     ]
   }
@@ -154,7 +154,7 @@ function App() {
     if (!otherActive) {
 
  // if the selected option is cue the code needs to set the form to a text area
-      if (cue.option === 'Other:') {
+      if (cue.option === 'Other') {
        ContinuationAnimation(()=>{
          setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar);
          setActiveForm(false) 
@@ -163,7 +163,7 @@ function App() {
      } 
 //else if the option is not an other and is simultaneously not one of the options from the first question (which effectively means they are from the second question) the code has to send the user to the contact form and colllect the data
 //options from the first question or first set of options all have IDs of less than 4 or equal to 4...hence the sign
-      else if (cue.id > Out_Of_Bounds_id && cue.option !== 'Other:') {
+      else if (cue.id > Out_Of_Bounds_id && cue.option !== 'Other') {
         setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar)
         ContinuationAnimation(()=>{
           setActiveForm(true)
@@ -220,7 +220,6 @@ function App() {
 
 
         {/*the code below is to check if the option of other has been submitted. if the option has been submitted the buttons on screen are replaced by a text box*/}
-          {otherActive? <h5>Please elaborate further</h5>: null}
         </div>
      {activeForm? 
      <form className='contact-info' id='options'>
@@ -247,7 +246,7 @@ function App() {
         <div>
           <form id='options' className = 'other-form'>
             <textarea onChange={captureText} placeholder='Tell us more'/>   
-          <input type='submit' id = 'submit-contact-info'/>
+          <input type='submit' id = 'submit-contact-info' onClick={()=>setActiveForm(true)}/>
           </form>
         </div>
       : 
@@ -271,7 +270,7 @@ function App() {
       </div>
 
 
-      <div id = 'terms'>{activeForm? <h5>By submitting you agree to share your contact info with a Americanprivateinvestigator.com and be contacted about private investigator services. There's no obligation to purchase any service. </h5> : <h5> @2025 AmericanPrivateInvestigator.com | insert slogan | <span id = 'highlighted'> Terms of Service - Privacy Policy - Do Not Sell My Info </span></h5>}</div>
+      <div id = 'terms'>{activeForm? <h5>By submitting you agree to share your contact info with a Americanprivateinvestigator.com and be contacted about private investigator services. There's no obligation to purchase any service. </h5> : <h5> @2025 AmericanPrivateInvestigator.com | insert slogan | <span id = 'highlighted-2'> Terms of Service - Privacy Policy - Do Not Sell My Info </span></h5>}</div>
       <div id = 'progress-bar'>
           <div id = 'bar' style={{width: `${progression}%`, maxWidth : '100%'}}>
           </div>
