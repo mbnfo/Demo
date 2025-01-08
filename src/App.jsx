@@ -270,7 +270,7 @@ function App() {
       </div>
 
 
-      <div id = 'terms'>{activeForm? <h5>By submitting you agree to share your contact info with a Americanprivateinvestigator.com and be contacted about private investigator services. There's no obligation to purchase any service. </h5> : <h5> @2025 AmericanPrivateInvestigator.com | <span id = 'highlighted-2'> Terms of Service - Privacy Policy -We Do Not Sell My Info </span></h5>}</div>
+      <div id = 'terms'>{activeForm? <h5>By submitting you agree to share your contact info with a Americanprivateinvestigator.com and be contacted about private investigator services. There's no obligation to purchase any service. </h5> : <h5> @ 2025 AmericanPrivateInvestigator.com | <span id = 'highlighted-2'> Terms of Service - Privacy Policy -We Do Not Sell My Info </span></h5>}</div>
       <div id = 'progress-bar'>
           <div id = 'bar' style={{width: `${progression}%`, maxWidth : '100%'}}>
           </div>
