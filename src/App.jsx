@@ -277,7 +277,7 @@ function App() {
       </div>
       <div id = 'submit'>
           { progressionId > 0 ?   <button onClick={back}>Back</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Back</button>}
-          { selectedOption ?   <button onClick={()=> HandleCue(selectedOption)}>Next</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Next</button>}
+          { selectedOption && otherActive ?   <button onClick={()=> HandleCue(selectedOption)}>Next</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Next</button>}
       </div>
     </div>
   )
