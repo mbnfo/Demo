@@ -1,7 +1,9 @@
+
 body {
   padding: 0;
   margin: 0;
   background-color: white;
+  height: 100%;
 }
 
 h1{
@@ -220,13 +222,18 @@ p {
 
 /* Small screens */
 @media screen and (max-width: 480px) {
+
+  #app{
+    margin-top: -30px;
+    overflow-y: hidden;
+  }
   #main {
     height: 80vh;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 3fr;
   }
   #options {
-    margin-top: 20px;
+    margin-top: -20px;
   }
   #text-input{
     width: 80vw;
@@ -262,6 +269,14 @@ p {
 
   h5{
     font-size: 6px;
+  }
+
+  #terms, #progress-bar{
+    margin-top: -20px;
+  }
+
+  #submit{
+    margin-top: -25px;
   }
 
   #submit {
