@@ -149,12 +149,13 @@ function App() {
  // if the selected option is cue the code needs to set the form to a text area
       if (cue === 'Other') {
       //  ContinuationAnimation(()=>{
-      //    setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar);
+      //    setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar)
       //    setActiveForm(false) 
       //    setOtherActive(true)
       //  })
       console.log('cue has been activated')
       setOtherActive(true)
+      setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar)
      } 
 
 //else if the option is not an other and is simultaneously not one of the options from the first question (which effectively means they are from the second question) the code has to send the user to the contact form and colllect the data
