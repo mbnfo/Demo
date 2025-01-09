@@ -4,6 +4,8 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
 const index = [
+
+
   {
     'id': 0,
     'title': 'First Option Service Buttons',
@@ -43,10 +45,6 @@ const index = [
         'id': 7,
         'option': 'Dating background check'
       },
-      {
-        'id': 8,
-        'option': 'Other'
-      }
     ]
   },
 
@@ -66,10 +64,6 @@ const index = [
         'id': 11,
         'option': 'Child custody cases'
       },
-      {
-        'id': 12,
-        'option': 'Other'
-      }
     ]
   },
   {
@@ -88,10 +82,6 @@ const index = [
         'id': 15,
         'option': 'Asset recovery'
       },
-      {
-        'id': 16,
-        'option': 'Other'
-      }
     ]
   },
 
@@ -111,10 +101,6 @@ const index = [
         'id': 19,
         'option': 'Fraud investigation'
       },
-      {
-        'id': 20,
-        'option': 'Other'
-      }
     ]
   }
 ]
@@ -130,8 +116,8 @@ function App() {
   const [activeForm, setActiveForm] = useState(false)
 
   const [text, setText] = useState('')
-  const [question_1_data, setQuestion_1_Data] = useState(null)
-  const [question_2_data, setQuestion_2_Data] = useState(null)
+  const [question_1_data, setQuestion_1_Data] = useState('')
+  const [question_2_data, setQuestion_2_Data] = useState('')
   const [userName, setUserName] = useState(null)
   const [userEmail, setUserEmail] = useState(null)
   const [userContact, setUserContact] = useState(null)
@@ -160,12 +146,14 @@ function App() {
     if (!otherActive) {
 
  // if the selected option is cue the code needs to set the form to a text area
-      if (cue.option === 'Other') {
-       ContinuationAnimation(()=>{
-         setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar);
-         setActiveForm(false) 
-         setOtherActive(true)
-       })
+      if (cue === 'Other') {
+      //  ContinuationAnimation(()=>{
+      //    setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar);
+      //    setActiveForm(false) 
+      //    setOtherActive(true)
+      //  })
+      console.log('cue has been activated')
+      setOtherActive(true)
      } 
 
 //else if the option is not an other and is simultaneously not one of the options from the first question (which effectively means they are from the second question) the code has to send the user to the contact form and colllect the data
@@ -232,14 +220,14 @@ const handleNumberChange = (e) => {
       alert(text)
       setOtherActive(false)
       setActiveForm(true)
+      setProggresion(progression + Increment_For_Loading_Bar)
     }
     else{
       alert(' Name: '+  userName + ' Email: ' + userEmail + ' Contact info: ' + userContact)
       setActiveForm(false)
+      setProgressionId(0)
     }
   }
-  
-
 
   const back = () => {
     ContinuationAnimation(()=>{
@@ -249,13 +237,15 @@ const handleNumberChange = (e) => {
     setOtherActive(false)
     })
   }
-
+  
 
 //captures the text from the "other" option text area and saves it in the text variable
   const captureText = (e) =>{
     setText(e.target.value)
     setSelectedOption(true)
   }
+
+
 
   console.log(index)
   return (
@@ -293,26 +283,38 @@ const handleNumberChange = (e) => {
      : 
      
       <>
-      {otherActive? 
-        <div>
-          <form id='options' className = 'other-form'>
-            <textarea onChange={captureText} placeholder='Tell us more'/>   
-          <input type='submit' id = 'submit-contact-info' onClick={HandleSubmit}/>
-          </form>
-        </div>
-      : 
+      {
         <>
         {/*the code below is the aferomentioned buttons on the screen that will be replaced by a text area when other has been clicked*/}
         <div id = 'options'>
         {/*the code below is what allows for the variables inside index to be looped through and displayed accordingly*/}
           { index[progressionId].options.map((cue, index) => {
             return (
-              <button id = 'option' key = {index}  onClick={()=> HandleCue(cue)}>
-              {/*this button sets in the option selected by the user into a variable*/}
-                <p>{cue.option}</p>
-              </button>
+              
+              <div id = 'option'>
+                <button key = {index}  onClick={()=> HandleCue(cue)}>
+                {/*this button sets in the option selected by the user into a variable*/}
+                  <h3>{cue.option}</h3>
+                </button>
+              </div>
             )
           }) }
+          <div id = 'option'>
+                {progressionId != 0  &&
+                
+                <button onClick={()=>{!otherActive && HandleCue('Other')}} id = 'other'><h3>Other</h3>{
+                  otherActive ? 
+                  <form>
+                  <div id = 'input'>
+                    <input type = 'text' onChange={captureText} placeholder='Tell us more' id = 'text-input' required/>
+                    <input type='submit' id = 'submit-contact-info' onClick={HandleSubmit}/>
+                  </div>
+                  </form>
+                  :
+                  null
+                }</button> 
+                  }
+          </div>
         </div>
       </>
      }
@@ -326,7 +328,7 @@ const handleNumberChange = (e) => {
           <div id = 'bar' style={{width: `${progression}%`, maxWidth : '100%'}}>
           </div>
       </div>
-      <div id = 'submit'>
+      <div id = 'back'>
           { progressionId > 0 ?   <button onClick={back}>Back</button> : <button style={{cursor:'not-allowed', backgroundColor: '#0041e642'}}>Back</button>}
       </div>
     </div>
