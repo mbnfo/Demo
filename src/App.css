@@ -1,20 +1,32 @@
-body {
-  padding: 0;
+html, body {
+  width: 100%;
   margin: 0;
-  background-color: white;
-  height: 100%;
-  overflow-x: hidden;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+* {
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+.container {
+  max-width: 100%; /* Ensure the container doesn't exceed the screen width */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 h1{
-  font-family: "Manrope", serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 50px;
 }
 
 h2, h3, h4, label {
-  font-family: "Manrope", serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   color: rgba(0, 0, 0, 0.847);
   padding-bottom: 5px;
@@ -58,7 +70,7 @@ h5 {
   grid-template-columns: 1fr 1fr;
 }
 
-#questions-section {
+#title-section {
   text-align: center;
   margin-top: 40px;
   padding: 5px;
@@ -68,7 +80,6 @@ h5 {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
   padding: 30px;
   height: 100%;
 }
@@ -76,13 +87,11 @@ h5 {
 #option button{
   border: 1px #ecebeb solid;
   background-color: white;
-  margin: auto;
-  margin-top: 18px;
   border-radius: 21px;
-  height: 100px;
-  max-height: max-content;
   min-width: 40vw;
   transition: transform 0.1s ease;
+  min-height: 100px; /* Ensures a minimum height of 100px */
+  height: auto;
 }
 
 #option h3{
@@ -102,17 +111,6 @@ h5 {
 #option button:hover{
   border: 3px #908f8f solid;
 }
-
-#other{
-  display: flex;
-  flex-direction: column;
-  min-height: fit-content;
-}
-
-#other h3{
-  text-align: left;
-}
-
 
 
 .contact-info {
@@ -276,7 +274,7 @@ p {
 @media screen and (max-width: 480px) {
 
   #app{
-    margin-top: -30px;
+    margin-top: -40px;
     overflow-y: hidden;
   }
   #main {
@@ -284,25 +282,32 @@ p {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 3fr;
   }
+
+  #title-section{
+    width: 95vw;
+    z-index: 99;
+  }
+
   #options {
-    margin-top: -65px;
+    margin-top: 0px;
+    padding: 0;
+    overflow-y: scroll;
   }
 
   #option{
-    margin-top: 10px;
+    margin-top: 0px;
+    height: 25px;
   }
 
   #option button{
     width: 90vw;
-    max-height: fit-content;
+    min-height: 5px;
+    height: auto;
   }
 
   #option h3{
     font-size: medium;
-  }
-
-  #other{
-    max-height: fit-content;
+    padding: -8px;
   }
 
   #option p{
@@ -329,13 +334,9 @@ p {
     height: 45vh;
   }
 
-  #option {
-    min-width: 100%;
-    height: 62px;
-  }
 
   h1{
-    font-size: x-large;
+    font-size: large;
   }
 
   h2, h3, h4, p, label {
@@ -350,15 +351,13 @@ p {
     margin-top: -20px;
   }
 
-  #submit{
+  #back{
     margin-top: -25px;
+    width: 80vw;
   }
 
-  #submit {
-    margin-right: 20px;
-  }
 
-  #submit button{
+  #back button{
     width: 80px;
     height: 40px;
   }

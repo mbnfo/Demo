@@ -3,6 +3,7 @@ import './App.css'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
+window.addEventListener('load', function() {  window.scroll(0, 0) })
 const index = [
 
 
@@ -255,7 +256,7 @@ const handleNumberChange = (e) => {
 
     {/*this is the main section of the app where the question prompts are located along with the options for answering the text prompts*/}
      <div id = 'main'>
-        <div id = 'questions-section'>
+        <div id = 'title-section'>
           <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>
           {/*the code below is to dynamically change the question asked, the questions are taken from the list above*/}
 
@@ -283,8 +284,6 @@ const handleNumberChange = (e) => {
      : 
      
       <>
-      {
-        <>
         {/*the code below is the aferomentioned buttons on the screen that will be replaced by a text area when other has been clicked*/}
         <div id = 'options'>
         {/*the code below is what allows for the variables inside index to be looped through and displayed accordingly*/}
@@ -292,7 +291,7 @@ const handleNumberChange = (e) => {
             return (
               
               <div id = 'option'>
-                <button key = {index}  onClick={()=> HandleCue(cue)}>
+                <button key = {index}  onClick={()=> HandleCue(cue)} id='btn'>
                 {/*this button sets in the option selected by the user into a variable*/}
                   <h3>{cue.option}</h3>
                 </button>
@@ -311,13 +310,11 @@ const handleNumberChange = (e) => {
                   </div>
                   </form>
                   :
-                  null
+                  <></>
                 }</button> 
                   }
           </div>
         </div>
-      </>
-     }
      </>
       }
       </div>
