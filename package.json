@@ -9,11 +9,13 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "start": "node backend/server.js"
   },
-  "homepage": "https://mbnfo.github.io/Demo",
+  "homepage": "https://mbnfo.github.io/Demo/",
   "dependencies": {
     "@gsap/react": "^2.1.1",
+    "axios": "^1.7.9",
     "better-sqlite3": "^11.7.2",
     "gsap": "^3.12.5",
     "react": "^18.3.1",

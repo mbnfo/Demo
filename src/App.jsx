@@ -225,11 +225,31 @@ const handleNumberChange = (e) => {
       setProggresion(progression + Increment_For_Loading_Bar)
     }
     else{
-      alert(' Name: '+  userName + ' Email: ' + userEmail + ' Contact info: ' + userContact)
       setActiveForm(false)
       setProgressionId(0)
+      handleBackEnd()
     }
   }
+
+  
+  const handleBackEnd = async (e) => {
+    e.preventDefault();
+    const formData = {
+      text: text,
+      question_1: question_1_data,
+      question_2: question_2_data,
+      name: userName,
+      email: userEmail,
+      contact: userContact
+    };
+    console.log('function has been called')
+    try {
+      const response = await axios.post('http://localhost:5000/api', formData);
+      alert(response.data.message);  // Handle success message
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+  };
 
   const back = () => {
     ContinuationAnimation(()=>{
@@ -265,7 +285,7 @@ const handleNumberChange = (e) => {
         {/*the code below is to check if the option of other has been submitted. if the option has been submitted the buttons on screen are replaced by a text box*/}
         </div>
      {activeForm? 
-     <form className='contact-info' id='options'>
+     <form className='contact-info' >
        <div id = 'input' >
         <label for = 'Name'><h3>Name*</h3></label>
           <input type='text' id = 'text-input' placeholder='Full Name' required onChange={(e)=>setUserName(e.target.value)}/>
@@ -279,7 +299,7 @@ const handleNumberChange = (e) => {
           <input type = 'tel' id = 'text-input'  placeholder="000-000-0000" maxlength="14" autocomplete="tel" onChange={handleNumberChange} value = {userContact} />
        </div>
        <div>
-        <input type='submit' id = 'submit-contact-info' onClick={HandleSubmit}/>
+        <input type='submit' id = 'submit-contact-info' onClick={HandleSubmit} onSubmit={HandleSubmit}/>
        </div>
      </form>
      : 
