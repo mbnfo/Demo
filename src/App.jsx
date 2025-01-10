@@ -286,36 +286,44 @@ const handleNumberChange = (e) => {
      
       <>
         {/*the code below is the aferomentioned buttons on the screen that will be replaced by a text area when other has been clicked*/}
-        <div id = 'options'>
-        {/*the code below is what allows for the variables inside index to be looped through and displayed accordingly*/}
-          { index[progressionId].options.map((cue, index) => {
-            return (
-              
-              <div id = 'option'>
-                <button key = {index}  onClick={()=> HandleCue(cue)} id='btn'>
-                {/*this button sets in the option selected by the user into a variable*/}
-                  <h3>{cue.option}</h3>
-                </button>
-              </div>
-            )
-          }) }
-          <div id = 'option'>
-                {progressionId != 0  &&
-                
-                <button onClick={()=>{!otherActive && HandleCue('Other')}} id = 'other'><h3>Other</h3>{
-                  otherActive ? 
-                  <form>
-                  <div id = 'input'>
-                    <input type = 'text' onChange={captureText} placeholder='Tell us more' id = 'text-input' required/>
-                    <input type='submit' id = 'submit-contact-info' onClick={HandleSubmit}/>
-                  </div>
-                  </form>
-                  :
-                  <></>
-                }</button> 
-                  }
-          </div>
-        </div>
+        <div id="options">
+  {/* Loop through and display available options dynamically */}
+  {index[progressionId].options.map((cue, idx) => (
+    <div id="option" key={idx}>
+      <button onClick={() => HandleCue(cue)} id="btn">
+        <h3>{cue.option}</h3>
+      </button>
+    </div>
+  ))}
+
+  {/* Display 'Other' button with conditional form */}
+  {progressionId !== 0 && (
+    <div id="option">
+      <button onClick={() => !otherActive && HandleCue('Other')} id="other">
+        <h3>Other</h3>
+        {otherActive && (
+          <form onSubmit={HandleSubmit}>
+            <div id="input">
+              <input
+                type="text"
+                onChange={captureText}
+                placeholder="Tell us more"
+                id="text-input"
+                required
+              />
+              <input
+                type="submit"
+                id="submit-contact-info"
+                value="Submit"
+              />
+            </div>
+          </form>
+        )}
+      </button>
+    </div>
+  )}
+</div>
+
      </>
       }
       </div>

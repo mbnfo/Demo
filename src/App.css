@@ -77,20 +77,25 @@ h5 {
 }
 
 #options {
-  display: flex;
+  display: flexbox;
   flex-direction: column;
   justify-content: space-around;
   padding: 30px;
   height: 100%;
+  margin-top: 50px;
+  gap: 100px;
+}
+
+#option{
+  margin: 14px;
 }
 
 #option button{
   border: 1px #ecebeb solid;
   background-color: white;
   border-radius: 21px;
-  min-width: 40vw;
-  transition: transform 0.1s ease;
-  min-height: 100px; /* Ensures a minimum height of 100px */
+  min-width: 41vw;
+  min-height: 80px; /* Ensures a minimum height of 100px with consideration of the text size*/
   height: auto;
 }
 
@@ -104,12 +109,11 @@ h5 {
 
 #option button:active,
 #option button:focus {
-  border: 5px #0040E6 solid;
-  transform: scale(0.98);
+  border: 1px #0040E6 solid;
 }
 
 #option button:hover{
-  border: 3px #908f8f solid;
+  border: 1px #908f8f solid;
 }
 
 
@@ -297,14 +301,18 @@ p {
     overflow-y: scroll;
   }
 
+  div#option:first-of-type {
+    margin-top: 0;
+  }
+
   #option{
-    margin-top: 0px;
+    margin-top: 50px;
     height: 25px;
   }
 
   #option button{
     width: 90vw;
-    min-height: 5px;
+    min-height: 64px;
     height: auto;
   }
 
