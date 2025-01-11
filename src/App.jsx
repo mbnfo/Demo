@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import {useGeolocation} from './hooks/useGeolocation'
+import GeolocationComponent from './components/Location'
+import ContactForm from './sections/ContactForm'
 
 window.addEventListener('load', function() {  window.scroll(0, 0) })
 const index = [
@@ -36,15 +39,15 @@ const index = [
     'options': [
       {
         'id': 5,
-        'option': 'Pre-employment screening',
+        'option': 'Background check'
       },
       {
         'id': 6,
-        'option': 'Tenant verification'
+        'option': 'Pre-employment screening',
       },
       {
         'id': 7,
-        'option': 'Dating background check'
+        'option': 'Tenant verification'
       },
     ]
   },
@@ -114,18 +117,28 @@ function App() {
   const [progression, setProggresion] = useState (33.33)
   const [selectedOption, setSelectedOption] = useState()
   const [otherActive, setOtherActive] = useState(false)
+  const [ALLOW_TRACK_LOCATION, setALLOW_TRACK_LOCATION] = useState(false)
   const [activeForm, setActiveForm] = useState(false)
 
-  const [text, setText] = useState('')
+  const [text, setText] = useState(null)
   const [question_1_data, setQuestion_1_Data] = useState('')
   const [question_2_data, setQuestion_2_Data] = useState('')
-  const [userName, setUserName] = useState(null)
-  const [userEmail, setUserEmail] = useState(null)
-  const [userContact, setUserContact] = useState(null)
+  const [location, setLocation] = useState({
+    city: null,
+    state: null,
+  });
+
+  const handleLocationUpdate = (city, state) => {
+    setLocation({ city, state });
+  };
+  
 
   const Increment_For_Loading_Bar = 33.33
   const Out_Of_Bounds_id = 4
   /*const answers = progressionId + 1*/
+
+  // const {locationError, locationInfo} = useGeolocation()
+  // console.log({locationError, locationInfo})
 
   const ContinuationAnimation = (onComplete) => {
      let tl = gsap.timeline();
@@ -174,7 +187,8 @@ function App() {
           setProggresion((prevstate) => prevstate + Increment_For_Loading_Bar)
           setProgressionId(cue.id);
           setQuestion_1_Data(cue)
-          setSelectedOption(null)})
+          setSelectedOption(null)}
+        )
       }
     } 
     //this means that the otherActive is actually active, meaning the user is seeing the data from the "other" option's text area and is thus sending their other data, we need to collect this data and then send the user to the contact form
@@ -187,34 +201,6 @@ function App() {
     }
   };
 
-
-  const formatPhoneNumber = (value) => {
-    // Remove all non-digit characters
-    const cleaned = value.replace(/\D/g, '');
-
-    // Format the number
-    const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
-
-    if (!match) return cleaned;
-
-    const [, areaCode, firstPart, secondPart] = match;
-
-    if (secondPart) {
-        return `(${areaCode}) ${firstPart} ${secondPart}`;
-    } else if (firstPart) {
-        return `(${areaCode}) ${firstPart}`;
-    } else if (areaCode) {
-        return `(${areaCode}`;
-    }
-
-    return '';
-};
-  
-const handleNumberChange = (e) => {
-  const input = e.target.value;
-  const formatted = formatPhoneNumber(input);
-  setUserContact(formatted);
-};
 
 
   const HandleSubmit = () => {
@@ -232,24 +218,6 @@ const handleNumberChange = (e) => {
   }
 
   
-  const handleBackEnd = async (e) => {
-    e.preventDefault();
-    const formData = {
-      text: text,
-      question_1: question_1_data,
-      question_2: question_2_data,
-      name: userName,
-      email: userEmail,
-      contact: userContact
-    };
-    console.log('function has been called')
-    try {
-      const response = await axios.post('http://localhost:5000/api', formData);
-      alert(response.data.message);  // Handle success message
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
-  };
 
   const back = () => {
     ContinuationAnimation(()=>{
@@ -257,6 +225,9 @@ const handleNumberChange = (e) => {
     setProggresion(Increment_For_Loading_Bar)
     setActiveForm(false)
     setOtherActive(false)
+    setQuestion_1_Data(null)
+    setQuestion_2_Data(null)
+    setALLOW_TRACK_LOCATION(false)
     })
   }
   
@@ -267,41 +238,31 @@ const handleNumberChange = (e) => {
     setSelectedOption(true)
   }
 
-
-
-  console.log(index)
   return (
     
     <div id = 'app'>
     {/*This is where the main page is located...everything in the app is here*/}
-
+    <div id = 'header'><h4>{question_2_data? question_2_data.option : question_1_data ? question_1_data.option : null}</h4>
+    </div>
     {/*this is the main section of the app where the question prompts are located along with the options for answering the text prompts*/}
      <div id = 'main'>
         <div id = 'title-section'>
-          <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>
+          {activeForm ? 
+          <>
+            <h1>Get the most qualified <span id = 'highlighted'>Private Investigator</span> for you needs</h1> 
+            <div  id = 'title-section-2'>
+              <h2>We will connect you only with Private Investigators who have verified licenses in order to provide you the best service for the lowest proce in you area.</h2>
+            </div>
+          </>
+            : <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>}
           {/*the code below is to dynamically change the question asked, the questions are taken from the list above*/}
 
+          {!ALLOW_TRACK_LOCATION? <button onClick={()=>setALLOW_TRACK_LOCATION(true)} className = "location-button">Detect your location?</button> : <GeolocationComponent onLocationUpdate={handleLocationUpdate} />}
 
         {/*the code below is to check if the option of other has been submitted. if the option has been submitted the buttons on screen are replaced by a text box*/}
         </div>
      {activeForm? 
-     <form className='contact-info' >
-       <div id = 'input' >
-        <label for = 'Name'><h3>Name*</h3></label>
-          <input type='text' id = 'text-input' placeholder='Full Name' required onChange={(e)=>setUserName(e.target.value)}/>
-       </div>
-       <div id = 'input'>
-        <label for = 'Email'><h3>Email*</h3></label>
-          <input type = 'email' id = 'text-input' placeholder='example@email.com' required onChange={(e)=>setUserEmail(e.target.value)}/>
-       </div>
-       <div id = 'input'>
-        <label for = 'Phone Number'><h3>Number*</h3></label>
-          <input type = 'tel' id = 'text-input'  placeholder="000-000-0000" maxlength="14" autocomplete="tel" onChange={handleNumberChange} value = {userContact} />
-       </div>
-       <div>
-        <input type='submit' id = 'submit-contact-info' onClick={HandleSubmit} onSubmit={HandleSubmit}/>
-       </div>
-     </form>
+     <ContactForm text={text} question_1_data={question_1_data} question_2_data = {question_2_data} city={location.city} state={location.state} />
      : 
      
       <>
@@ -320,9 +281,9 @@ const handleNumberChange = (e) => {
   {progressionId !== 0 && (
     <div id="option">
       <button onClick={() => !otherActive && HandleCue('Other')} id="other">
-        <h3>Other</h3>
+        {!otherActive ? <h3>Other</h3>: <h3 style={{opacity: '0'}}>Other</h3>}
         {otherActive && (
-          <form onSubmit={HandleSubmit}>
+          <form onSubmit={HandleSubmit} s>
             <div id="input">
               <input
                 type="text"
@@ -335,6 +296,7 @@ const handleNumberChange = (e) => {
                 type="submit"
                 id="submit-contact-info"
                 value="Submit"
+                style={{marginLeft: "6px"}}
               />
             </div>
           </form>
@@ -362,79 +324,3 @@ const handleNumberChange = (e) => {
 }
 
 export default App
-
-//front end part for submitting to sql
-
- {/* 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        const response = await fetch('http://localhost:3001/api/data', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text, question_1_data, question_2_data,   }),
-        });
-
-        if (response.ok) {
-            alert('Data sent successfully!');
-        } else {
-            alert('Error sending data.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}*/}
-
-
-
-//back end part using nodejs to submit the sql
-{/* 
-  
-Note: this is a package required to be installed in a terminal -----> [npm install express body-parser mysql2]
-
-const express = require('express');
-const bodyParser = require('body-parser');
-const mysql = require('mysql2');
-
-const app = express();
-const port = 3001;
-
-// Middleware
-app.use(bodyParser.json());
-
-// MySQL connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'yourUsername',
-    password: 'yourPassword',
-    database: 'yourDatabaseName',
-});
-
-db.connect(err => {
-    if (err) {
-        console.error('Error connecting to database:', err);
-        return;
-    }
-    console.log('Connected to database!');
-});
-
-// API endpoint to receive data
-app.post('/api/data', (req, res) => {
-    const { name, age } = req.body;
-
-    const query = 'INSERT INTO users (name, age) VALUES (?, ?)';
-    db.query(query, [name, age], (err, results) => {
-        if (err) {
-            console.error('Error executing query:', err);
-            res.status(500).send('Database error');
-        } else {
-            res.status(200).send('Data inserted successfully!');
-        }
-    });
-});
-
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
-
- */}
