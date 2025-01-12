@@ -196,6 +196,15 @@ input[type = "text"], input[type = "email"], input[type = "tel"]{
   color: white;
 }
 
+#submit-contact-info:hover{
+  background-color: #b6cbff9d;
+}
+
+#submit-contact-info:active,
+#submit-contact-info:focus{
+  background-color: #0040E6;
+}
+
 form {
   height: fit-content;
   width: 100%;
