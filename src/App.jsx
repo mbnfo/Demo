@@ -242,7 +242,7 @@ function App() {
     
     <div id = 'app'>
     {/*This is where the main page is located...everything in the app is here*/}
-    <div id = 'header'><h4>{question_2_data? question_2_data.option : question_1_data ? question_1_data.option : null}</h4>
+    <div id = 'header'><h4 style = {{color : 'rgba(0, 0, 0, 0.29)'}}>{question_2_data? question_2_data.option : question_1_data ? question_1_data.option : null}</h4>
     </div>
     {/*this is the main section of the app where the question prompts are located along with the options for answering the text prompts*/}
      <div id = 'main'>
@@ -251,7 +251,7 @@ function App() {
           <>
             <h1>Get the most qualified <span id = 'highlighted'>Private Investigator</span> for you needs</h1> 
             <div  id = 'title-section-2'>
-              <h2>We will connect you only with Private Investigators who have verified licenses in order to provide you the best service for the lowest proce in you area.</h2>
+              <p>We will connect you only with Private Investigators who have verified licenses in order to provide you the best service for the lowest price in you area.</p>
             </div>
           </>
             : <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>}
