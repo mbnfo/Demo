@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const GeolocationComponent = ({ onLocationUpdate }) => {
+const GeolocationComponent = ({ onLocationUpdate, onLocationError }) => {
   const [location, setLocation] = useState({
     latitude: null,
     longitude: null,
@@ -47,6 +47,7 @@ const GeolocationComponent = ({ onLocationUpdate }) => {
               ...prevState,
               error: 'Error fetching geolocation data.',
             }));
+            onLocationError();
           }
         },
         (error) => {
@@ -54,6 +55,7 @@ const GeolocationComponent = ({ onLocationUpdate }) => {
             ...prevState,
             error: error.message,
           }));
+          onLocationError();
         }
       );
     } else {
@@ -61,8 +63,9 @@ const GeolocationComponent = ({ onLocationUpdate }) => {
         ...prevState,
         error: 'Geolocation is not supported by this browser.',
       }));
+      onLocationError();
     }
-  }, [onLocationUpdate]);
+  }, [onLocationUpdate, onLocationError]);
 
   return (
     <div>
@@ -74,7 +77,6 @@ const GeolocationComponent = ({ onLocationUpdate }) => {
         </div>
       )}
     </div>
-    
   );
 };
 

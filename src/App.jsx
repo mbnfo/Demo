@@ -1,114 +1,11 @@
-import { useEffect, useState } from 'react'
+import { index, states } from './constant/index'
+import { useEffect, useState, useRef } from 'react'
 import './App.css'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import {useGeolocation} from './hooks/useGeolocation'
 import GeolocationComponent from './components/Location'
 import ContactForm from './sections/ContactForm'
 
 window.addEventListener('load', function() {  window.scroll(0, 0) })
-const index = [
-
-
-  {
-    'id': 0,
-    'title': 'First Option Service Buttons',
-    'options': [
-      {
-        'id': 1,
-        'option': 'Background checks',
-      },
-      {
-        'id': 2,
-        'option': 'Surveillance',
-      },
-      {
-        'id': 3,
-        'option': 'Find a person',
-      },
-      {
-        'id': 4,
-        'option': 'Corporate investigations'
-      },
-    ]
-  },
-
-  {
-    'id': 1,
-    'title': 'BackGround checks',
-    'options': [
-      {
-        'id': 5,
-        'option': 'Background check'
-      },
-      {
-        'id': 6,
-        'option': 'Pre-employment screening',
-      },
-      {
-        'id': 7,
-        'option': 'Tenant verification'
-      },
-    ]
-  },
-
-  {
-    'id': 2,
-    'title': 'Surveillance services',
-    'options': [
-      {
-        'id': 9,
-        'option': 'Infidelity investigation',
-      },
-      {
-        'id': 10,
-        'option': 'Insurance fraud'
-      },
-      {
-        'id': 11,
-        'option': 'Child custody cases'
-      },
-    ]
-  },
-  {
-    'id': 3,
-    'title': 'Find a person',
-    'options': [
-      {
-        'id': 13,
-        'option': 'Skip tracing'
-      },
-      {
-        'id': 14,
-        'option': 'Lost family members'
-      },
-      {
-        'id': 15,
-        'option': 'Asset recovery'
-      },
-    ]
-  },
-
-  {
-    'id': 4,
-    'title': 'Corporate investigations',
-    'options': [
-      {
-        'id': 17,
-        'option': 'Employee misconduct'
-      },
-      {
-        'id': 18,
-        'option': 'Due diligence',
-      },
-      {
-        'id': 19,
-        'option': 'Fraud investigation'
-      },
-    ]
-  }
-]
-
 
 
 function App() {
@@ -128,10 +25,29 @@ function App() {
     state: null,
   });
 
+  const inputRef = useRef(null);
+  const [locationAllowed, setLocationAllowed] = useState(null);
+  const [selectedState, setSelectedState] = useState('');
+
+  useEffect(() => {
+    if (otherActive && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [otherActive]);
+
   const handleLocationUpdate = (city, state) => {
     setLocation({ city, state });
+    setLocationAllowed(true);
   };
-  
+
+  const handleLocationError = () => {
+    setLocationAllowed(false);
+  };
+
+  const handleStateChange = (e) => {
+    setSelectedState(e.target.value);
+    setLocation({ city: '', state: e.target.value });
+  };
 
   const Increment_For_Loading_Bar = 33.33
   const Out_Of_Bounds_id = 4
@@ -205,7 +121,6 @@ function App() {
 
   const HandleSubmit = () => {
     if(otherActive){
-      alert(text)
       setOtherActive(false)
       setActiveForm(true)
       setProggresion(progression + Increment_For_Loading_Bar)
@@ -248,7 +163,24 @@ function App() {
             <div  id = 'title-section-2'>
               <p>We will connect you only with Private Investigators who have verified licenses in order to provide you the best service for the lowest price in you area.</p>
             </div>
-            {!ALLOW_TRACK_LOCATION ? <button onClick={()=>setALLOW_TRACK_LOCATION(true)} className = "location-button">Detect your location?</button> : <GeolocationComponent onLocationUpdate={handleLocationUpdate} />}
+            {locationAllowed === null && (
+                <div className="location-detection">
+                  <div className="spinner"></div>
+                  <button onClick={() => setALLOW_TRACK_LOCATION(true)} className="location-button">Allow location so we can find a Licensed PI near you</button>
+                </div>
+              )}
+              {locationAllowed === false && (
+                <div className="state-selection">
+                  <label htmlFor="state-select">Select your State:</label>
+                  <select id="state-select" value={selectedState} onChange={handleStateChange}>
+                    <option value="">--Select State--</option>
+                    {states.map((state, index) => (
+                      <option key={index} value={state}>{state}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {ALLOW_TRACK_LOCATION && <GeolocationComponent onLocationUpdate={handleLocationUpdate} onLocationError={handleLocationError} />}
           </>
             : <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>
           }
@@ -273,16 +205,21 @@ function App() {
   {/* Display 'Other' button with conditional form */}
   {progressionId !== 0 && (
     <div id="option">
-      <div onClick={() => !otherActive && HandleCue('Other')} id="other">
+      <div 
+        onClick={() => !otherActive && HandleCue('Other')} 
+        id="other" 
+      >
         {!otherActive ? <h3>Other</h3>: <h3 style={{opacity: '0'}}>Other</h3>}
         {otherActive && (
-          <form onSubmit={HandleSubmit} s>
-            <div id="input">
+          <form onSubmit={HandleSubmit}>
+            <div id="input" >
               <input
                 type="text"
                 onChange={captureText}
                 placeholder="Tell us more"
                 id="text-input"
+                ref={inputRef}
+                autoComplete='text'
                 required
               />
               <input

@@ -5,6 +5,8 @@ const ContactForm = ({ text, question_1_data, question_2_data, city, state }) =>
   const [userEmail, setUserEmail] = useState('');
   const [userContact, setUserContact] = useState('');
 
+
+
   const handleBackEnd = async (e) => {
     e.preventDefault();
     const formData = {
@@ -17,7 +19,7 @@ const ContactForm = ({ text, question_1_data, question_2_data, city, state }) =>
       city,
       state,
     };
-    console.log('function has been called');
+
     // Send data to the webhook endpoint (backend)
     try {
       const response = await fetch('http://localhost:5000/api/data', {
@@ -55,16 +57,41 @@ const ContactForm = ({ text, question_1_data, question_2_data, city, state }) =>
     <form className='contact-info' onSubmit={handleBackEnd}>
       <div id='input'>
         <label htmlFor='Name'><h3>Name*</h3></label>
-        <input type='text' id='text-input' placeholder='Full Name' required onChange={(e) => setUserName(e.target.value)} />
+        <input
+          type='text'
+          id='text-input' 
+          placeholder='Full Name'
+          autoComplete='name'
+          required 
+          onChange={(e) => setUserName(e.target.value)} 
+        />
       </div>
+
       <div id='input'>
         <label htmlFor='Email'><h3>Email*</h3></label>
-        <input type='email' id='text-input' placeholder='example@email.com' required onChange={(e) => setUserEmail(e.target.value)} />
+        <input 
+          type='email' 
+          id='text-input' 
+          placeholder='example@email.com' 
+          autoComplete='email'
+          required 
+          onChange={(e) => setUserEmail(e.target.value)} 
+        />
       </div>
+
       <div id='input'>
         <label htmlFor='Phone Number'><h3>Phone Number*</h3></label>
-        <input type='tel' id='text-input' placeholder='(123)-456-7890' maxLength='14' autoComplete='tel' onChange={handlePhoneInput} value={userContact} />
+        <input 
+          type='tel' 
+          id='text-input' 
+          placeholder='(123)-456-7890' 
+          maxLength='14' 
+          autoComplete='tel' 
+          onChange={handlePhoneInput} 
+          value={userContact} 
+        />
       </div>
+
       <div>
         <input type='submit' id='submit-contact-info' />
       </div>
