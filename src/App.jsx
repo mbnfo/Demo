@@ -210,11 +210,6 @@ function App() {
       setActiveForm(true)
       setProggresion(progression + Increment_For_Loading_Bar)
     }
-    else{
-      setActiveForm(false)
-      setProgressionId(0)
-      handleBackEnd()
-    }
   }
 
   
@@ -242,7 +237,7 @@ function App() {
     
     <div id = 'app'>
     {/*This is where the main page is located...everything in the app is here*/}
-    <div id = 'header'><h4 style = {{color : 'rgba(0, 0, 0, 0.29)'}}>{question_2_data? question_2_data.option : question_1_data ? question_1_data.option : null}</h4>
+    <div id = 'header'><h4>{question_2_data? question_2_data.option : question_1_data ? question_1_data.option : null}</h4>
     </div>
     {/*this is the main section of the app where the question prompts are located along with the options for answering the text prompts*/}
      <div id = 'main'>
@@ -253,13 +248,11 @@ function App() {
             <div  id = 'title-section-2'>
               <p>We will connect you only with Private Investigators who have verified licenses in order to provide you the best service for the lowest price in you area.</p>
             </div>
+            {!ALLOW_TRACK_LOCATION ? <button onClick={()=>setALLOW_TRACK_LOCATION(true)} className = "location-button">Detect your location?</button> : <GeolocationComponent onLocationUpdate={handleLocationUpdate} />}
           </>
-            : <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>}
-          {/*the code below is to dynamically change the question asked, the questions are taken from the list above*/}
-
-          {!ALLOW_TRACK_LOCATION? <button onClick={()=>setALLOW_TRACK_LOCATION(true)} className = "location-button">Detect your location?</button> : <GeolocationComponent onLocationUpdate={handleLocationUpdate} />}
-
-        {/*the code below is to check if the option of other has been submitted. if the option has been submitted the buttons on screen are replaced by a text box*/}
+            : <h1> What do you need a <span id = 'highlighted'>Private Investigator </span>to do for you?</h1>
+          }
+        
         </div>
      {activeForm? 
      <ContactForm text={text} question_1_data={question_1_data} question_2_data = {question_2_data} city={location.city} state={location.state} />
@@ -280,7 +273,7 @@ function App() {
   {/* Display 'Other' button with conditional form */}
   {progressionId !== 0 && (
     <div id="option">
-      <button onClick={() => !otherActive && HandleCue('Other')} id="other">
+      <div onClick={() => !otherActive && HandleCue('Other')} id="other">
         {!otherActive ? <h3>Other</h3>: <h3 style={{opacity: '0'}}>Other</h3>}
         {otherActive && (
           <form onSubmit={HandleSubmit} s>
@@ -294,14 +287,14 @@ function App() {
               />
               <input
                 type="submit"
-                id="submit-contact-info"
+                id="submit-other-info"
                 value="Submit"
-                style={{marginLeft: "6px"}}
+                style={{margin: "auto"}}
               />
             </div>
           </form>
         )}
-      </button>
+      </div>
     </div>
   )}
 </div>

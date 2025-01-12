@@ -120,7 +120,7 @@ h5 {
   margin: 14px;
 }
 
-#option button{
+#option button, #other{
   border: 1px #ecebeb solid;
   background-color: white;
   border-radius: 21px;
@@ -137,12 +137,24 @@ h5 {
   text-align: left;
 }
 
+#other{
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
 #option button:active,
-#option button:focus {
+#option button:focus,
+#other:active,
+#othher:focus {
   border: 1px #0040E6 solid;
 }
 
-#option button:hover{
+#option button:hover,
+#other:hover{
   border: 1px #908f8f solid;
 }
 
@@ -166,9 +178,6 @@ h5 {
   grid-template-rows: 1fr 1fr;
 }
 
-
-
-
 input[type = "text"], input[type = "email"], input[type = "tel"]{
   padding-left: 15px;
 }
@@ -186,7 +195,9 @@ input[type = "text"], input[type = "email"], input[type = "tel"]{
   margin-top: -25px;
 }
 
-#submit-contact-info {
+
+#submit-contact-info,
+#submit-other-info {
   width: 40vw;
   height: 57px;
   border-radius: 10px;
@@ -196,14 +207,20 @@ input[type = "text"], input[type = "email"], input[type = "tel"]{
   color: white;
 }
 
-#submit-contact-info:hover{
+
+
+#submit-contact-info:hover,
+#submit-other-info{
   background-color: #b6cbff9d;
 }
 
 #submit-contact-info:active,
-#submit-contact-info:focus{
+#submit-contact-info:focus,
+#submit-other-info:active,
+#submit-other-info:focus{
   background-color: #0040E6;
 }
+
 
 form {
   height: fit-content;
@@ -332,10 +349,14 @@ form {
   #text-input{
     width: 80vw;
   }
-  #submit-contact-info{
+  #submit-contact-info,
+  #submit-other-info{
     width: 82vw;
   }
 
+  #submit-other-info{
+    margin-left: 0;
+  }
 
   .contact-info {
     width: 100%;
