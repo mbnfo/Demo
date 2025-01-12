@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ContactForm = ({ text, question_1_data, question_2_data, city, state }) => {
+const ContactForm = ({ text, question_1_data, question_2_data, city, state, zip }) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userContact, setUserContact] = useState('');
@@ -18,6 +18,7 @@ const ContactForm = ({ text, question_1_data, question_2_data, city, state }) =>
       contact: userContact,
       city,
       state,
+      zip
     };
 
     // Send data to the webhook endpoint (backend)

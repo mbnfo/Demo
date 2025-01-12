@@ -7,6 +7,7 @@ const GeolocationComponent = ({ onLocationUpdate, onLocationError }) => {
     longitude: null,
     city: null,
     state: null,
+    zip: null,
     country: null,
     error: null,
   });
@@ -19,16 +20,17 @@ const GeolocationComponent = ({ onLocationUpdate, onLocationError }) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
 
-          // Fetch the city and state using reverse geocoding from Nominatim
+          // Fetch the city, state, and zip code using reverse geocoding from Nominatim
           try {
             const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
 
             const response = await axios.get(url);
             const address = response.data.address;
 
-            // Extract city, state, and country
+            // Extract city, state, zip code, and country
             const city = address.city || address.town || address.village;
             const state = address.state;
+            const zip = address.postcode;
             //const country = address.country;
 
             setLocation({
@@ -36,12 +38,13 @@ const GeolocationComponent = ({ onLocationUpdate, onLocationError }) => {
               longitude,
               city,
               state,
+              zip,
               //country,
               error: null,
             });
 
-            // Call the onLocationUpdate prop with the city and state
-            onLocationUpdate(city, state);
+            // Call the onLocationUpdate prop with the city, state, and zip code
+            onLocationUpdate(city, state, zip);
           } catch (error) {
             setLocation((prevState) => ({
               ...prevState,
@@ -73,7 +76,7 @@ const GeolocationComponent = ({ onLocationUpdate, onLocationError }) => {
         <p> Please enable location tracking to make sure you get the best investigator close to you</p>
       ) : (
         <div>
-          <p>{location.city},  {location.state}</p>
+          <p>{location.city}, {location.state}, zip: {location.zip}</p>
         </div>
       )}
     </div>

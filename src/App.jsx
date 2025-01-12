@@ -23,7 +23,9 @@ function App() {
   const [location, setLocation] = useState({
     city: null,
     state: null,
+    zip: null,
   });
+  const [zipCode, setZipCode] = useState('');
 
   const inputRef = useRef(null);
   const [locationAllowed, setLocationAllowed] = useState(null);
@@ -35,8 +37,9 @@ function App() {
     }
   }, [otherActive]);
 
-  const handleLocationUpdate = (city, state) => {
-    setLocation({ city, state });
+  const handleLocationUpdate = (city, state, zip) => {
+    setLocation({ city, state, zip });
+    setZipCode(zip);
     setLocationAllowed(true);
   };
 
@@ -46,7 +49,12 @@ function App() {
 
   const handleStateChange = (e) => {
     setSelectedState(e.target.value);
-    setLocation({ city: '', state: e.target.value });
+    setLocation({ city: '', state: e.target.value, zip: zipCode });
+  };
+
+  const handleZipCodeChange = (e) => {
+    setZipCode(e.target.value);
+    setLocation((prevState) => ({ ...prevState, zip: e.target.value }));
   };
 
   const Increment_For_Loading_Bar = 33.33
@@ -166,18 +174,27 @@ function App() {
             {locationAllowed === null && (
                 <div className="location-detection">
                   <div className="spinner"></div>
-                  <button onClick={() => setALLOW_TRACK_LOCATION(true)} className="location-button">Allow location so we can find a Licensed PI near you</button>
+                  <button onClick={() => setALLOW_TRACK_LOCATION(true)} className="location-button">Allow location so we can find a Licensed PI near you or enter your state</button>
                 </div>
               )}
               {locationAllowed === false && (
                 <div className="state-selection">
-                  <label htmlFor="state-select">Select your State:</label>
+                  <label htmlFor="state-select"></label>
                   <select id="state-select" value={selectedState} onChange={handleStateChange}>
-                    <option value="">--Select State--</option>
+                    <option value="">--Select your State--</option>
                     {states.map((state, index) => (
                       <option key={index} value={state}>{state}</option>
                     ))}
                   </select>
+                  <input 
+                    type="text" 
+                    placeholder="Zip Code" 
+                    value={zipCode} 
+                    onChange={handleZipCodeChange} 
+                    className="zip-code-input"
+                    maxLength={5}
+                    required
+                  />
                 </div>
               )}
               {ALLOW_TRACK_LOCATION && <GeolocationComponent onLocationUpdate={handleLocationUpdate} onLocationError={handleLocationError} />}
@@ -187,7 +204,7 @@ function App() {
         
         </div>
      {activeForm? 
-     <ContactForm text={text} question_1_data={question_1_data} question_2_data = {question_2_data} city={location.city} state={location.state} />
+     <ContactForm text={text} question_1_data={question_1_data} question_2_data = {question_2_data} city={location.city} state={location.state} zip = {location.zip}/>
      : 
      
       <>
